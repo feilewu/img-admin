@@ -19,6 +19,8 @@
 import { ref } from 'vue'
 import http from '@/request/index'
 import router from "@/router";
+import api from "@/config";
+
 
 export default {
   name: "LoginPage",
@@ -26,7 +28,7 @@ export default {
     const userName = ref('')
     const password = ref('')
     function submit(){
-      http.post('http://localhost:9527/api/user/login', JSON.stringify({
+      http.post(api.serverHost+'/api/user/login', JSON.stringify({
         "name": userName.value,
         "password": password.value
       })).then(data=>{

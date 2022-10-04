@@ -2,7 +2,7 @@
   <el-upload
       class="upload-page"
       drag
-      action="http://localhost:9527/api/img"
+      :action="uploadApi"
       :headers="headers"
       :on-success="onSuccess"
   >
@@ -25,17 +25,22 @@
 
 <script>
 import {ref} from "vue";
+import api from "@/config";
 
 export default {
   name: "UploadPage",
   setup(){
+
+    const uploadApi = api.serverHost+'/api/img'
+
     const headers = {
       "token": localStorage.getItem("token"),
     }
 
-    let loadedUrl = ref('https://tva3.sinaimg.cn/large/0072Vf1pgy1foxloigdl2j31kw0w0kib.jpg')
+    let loadedUrl = ref('')
 
     return {
+      uploadApi,
       headers,
       loadedUrl,
       onSuccess(resp){
