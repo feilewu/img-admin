@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory} from "vue-router";
 import AdminPage from "@/components/AdminPage";
 import LoginPage from "@/components/common/LoginPage";
+import UploadPage from "@/components/common/UploadPage";
 
 
 const routes = [
@@ -12,6 +13,10 @@ const routes = [
         path: '/login',
         component: LoginPage,
     },
+    {
+        path: '/upload',
+        component: UploadPage
+    }
 ]
 
 const router = createRouter({
