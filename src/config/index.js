@@ -1,7 +1,8 @@
 const api = {
 
-    serverHost: 'http://localhost:9527'
+    serverHost: 'https://img.taole.tech'
 
+    //serverHost: 'http://localhost:9527'
 
 
 
