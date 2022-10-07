@@ -28,6 +28,11 @@ router.beforeEach((to, from, next)=>{
     if (to.path === '/login') return next();
     let token = localStorage.getItem("token");
     if (token){
+        const lastSetTime = localStorage.getItem("tokenSetTime")
+        if (new Date().getTime() - parseInt(lastSetTime) > 29*60*1000) {
+            localStorage.clear()
+            return next('login')
+        }
         next()
     } else {
         return next('/login')

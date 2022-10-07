@@ -21,7 +21,6 @@ import http from '@/request/index'
 import router from "@/router";
 import api from "@/config";
 
-
 export default {
   name: "LoginPage",
   setup(){
@@ -33,21 +32,13 @@ export default {
         "password": password.value
       })).then(data=>{
 
-        if (data.success){
+        if (data){
           localStorage.setItem("token",data.obj)
-
+          localStorage.setItem("tokenSetTime",new Date().getTime().toString())
           router.push('/')
-
-
-        } else {
-          alert(data.message)
         }
-
-
       })
-
     }
-
 
     return {
       userName,

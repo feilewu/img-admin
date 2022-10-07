@@ -1,4 +1,5 @@
 import axios from 'axios'
+import api from "@/config";
 
 axios.defaults.crossDomain=true
 
@@ -31,13 +32,25 @@ http.interceptors.request.use(
 http.interceptors.response.use(
     function (response) {
         // 2xx 范围内的状态码都会触发该函数。
-        // 对响应数据做点什么
-        // dataAxios 是 axios 返回数据中的 data
-        const dataAxios = response.data
-        // 这个状态码是和后端约定的
-        const code = dataAxios.code
-        console.log(code)
-        return dataAxios
+        const data = response.data
+        const lastSetTime = localStorage.getItem("tokenSetTime")
+        if (new Date().getTime() - parseInt(lastSetTime) > 20*60*1000) {
+            http.get(api.serverHost+"/api/user/refreshToken")
+                .then(resp=>{
+                    if (resp.data.success){
+                        localStorage.setItem("token",resp.data.obj)
+                        localStorage.setItem("tokenSetTime",new Date().getTime().toString())
+                    }else {
+                        localStorage.clear()
+                    }
+                })
+        }
+
+        if (data.success){
+            return data
+        }else {
+            alert(data.message)
+        }
     },
     function (error) {
         // 超出 2xx 范围的状态码都会触发该函数。
